@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="jate" default="jar">
+	<property name="cible" value="jate.jar" />	
+    <target name="jar" description="Generation du jar">
+        <delete file="${cible}"/>  
+    	<jar destfile="${cible}">
+		    <fileset dir="META-INF"/>
+		    <fileset dir="class"/>
+		    <fileset dir="ext"/>
+    		<manifest>
+    		      <attribute name="Main-Class"
+    		            value="atelier.Jate"/>
+   		    </manifest>
+    	</jar>
+        <copy tofile="/home/billerot/atelier/${cible}" verbose="yes"
+            file="${cible}" />
+        <copy tofile="../atelier/${cible}" verbose="yes"
+            file="${cible}" />
+        <copy tofile="../windows/atelier/${cible}" verbose="yes"
+            file="${cible}" />
+	</target>
+    <target name="replication" description="Replication de repertoire">
+		<sync todir="repertoireCible" verbose="yes" includeEmptyDirs="yes" overwrite="no">
+	            <fileset dir="repertoireSource"/>
+	    </sync>
+	</target>
+</project>
