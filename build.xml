@@ -12,16 +12,7 @@
     		            value="atelier.Jate"/>
    		    </manifest>
     	</jar>
-        <copy tofile="/home/billerot/atelier/${cible}" verbose="yes"
+        <copy tofile="${cible}" verbose="yes"
             file="${cible}" />
-        <copy tofile="../atelier/${cible}" verbose="yes"
-            file="${cible}" />
-        <copy tofile="../windows/atelier/${cible}" verbose="yes"
-            file="${cible}" />
-	</target>
-    <target name="replication" description="Replication de repertoire">
-		<sync todir="repertoireCible" verbose="yes" includeEmptyDirs="yes" overwrite="no">
-	            <fileset dir="repertoireSource"/>
-	    </sync>
 	</target>
 </project>
