@@ -24,6 +24,8 @@ private final static int     FTP_SUB = 2;
 private int     FTP_TYPE_COMMANDE;
 private Thread  thread = null;
 private String  fichier = "";
+private String encoding = null;
+
 static final JTextComponent.KeyBinding[] defaultBindings = {
      new JTextComponent.KeyBinding(
        KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK),
@@ -80,7 +82,8 @@ private JButton     buttonFin;
 private JTextArea   textArea;
 private JScrollPane scrollPane;
 private JViewport   viewPort;
-CaretListenerLabel  caretListenerLabel;
+private CaretListenerLabel  caretListenerLabel;
+private JLabel  labelEncoding;
 // BARRE RECHERCHE
 private JCheckBox   checkCasse;
 private JButton     buttonSearch;
@@ -93,6 +96,8 @@ private JTextField  textReplace;
         super(new BorderLayout());
         this.jaf = pjaf;
         this.jac = jaf.getJaProperties();
+        this.encoding = System.getProperty("file.encoding");
+
         if ( ! jac.getParam("jate","ftpOpen", "").equals("") ) AVEC_FTP = true;
         initComponents();
         this.jac.getPosition(this, nomClasse);
@@ -105,8 +110,15 @@ private JTextField  textReplace;
         try {
             sauveQuiPeut();
             this.fichier = fichier;
+            
+            this.encoding = Ja.getEncoding(fichier);
+            
             textArea.setText("");
-            if ( ! fichier.equals("") ) Ja.loadTextArea(textArea, fichier, jaf);
+            if ( ! fichier.equals("") ) {
+            	this.encoding = Ja.getEncoding(fichier);
+            	Ja.loadTextArea(textArea, fichier, jaf, this.encoding);
+            } // endif
+            labelEncoding.setText(" - " + this.encoding);
             undo.discardAllEdits();
             buttonEnabled();
             textArea.setCaretPosition(0); // positionnement au début du texte
@@ -139,7 +151,7 @@ private JTextField  textReplace;
 
     public void saveAs(String fichier) {
         this.fichier = fichier;
-        Ja.saveTextArea(textArea, fichier, jaf);
+        Ja.saveTextArea(textArea, fichier, jaf, this.encoding);
         undo.discardAllEdits();
         buttonEnabled();
         setTitre();
@@ -340,6 +352,11 @@ private JTextField  textReplace;
         caretListenerLabel.setFont(Ja.getFont());
         caretListenerLabel.setForeground(Color.black);
         toolbar.add(caretListenerLabel);
+
+        labelEncoding = new JLabel(" - " + this.encoding);
+        labelEncoding.setFont(Ja.getFont());
+        labelEncoding.setForeground(Color.black);
+        toolbar.add(labelEncoding);
 
         toolbar.addMouseListener(this);
 
@@ -788,7 +805,7 @@ private JTextField  textReplace;
                 Ja.debug(670, nomClasse, ex);
             } // end try
         } // endif
-        if ( e.getKeyCode() == KeyEvent.VK_F5 ) {
+        if ( e.getKeyCode() == KeyEvent.VK_F11 ) {
             // exécution de la ligne de commande courante
         	fireJaPaneEventAction("Paramètres", "", "Paramètres", "%2");
         	} // endif

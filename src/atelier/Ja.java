@@ -5,6 +5,9 @@ import java.util.*;
 import java.text.*;
 import java.sql.*;
 import javax.swing.*;
+
+import org.mozilla.universalchardet.UniversalDetector;
+
 import java.awt.*;
 
 /**
@@ -58,19 +61,25 @@ private static final String nomClasse = "Ja";
      * @param textArea
      * @param url
      */
-    public static void loadTextArea(JTextArea textArea, URL url, String fileEncoding)
+    public static void loadTextArea(JTextArea textArea, URL url, String encoding)
     {
       textArea.setText("");
       try {
-        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), fileEncoding));
+        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), encoding));
         StringBuffer str = new StringBuffer();
         String ligne;
         while ((ligne = in.readLine()) != null)
         {
           str.append(ligne + "\n");
         }
-        textArea.setText(str.toString());
         in.close();
+//        if ( encoding.equalsIgnoreCase("UTF-8")) {
+//        	str.delete(0, 2);
+//        } 
+//        if ( encoding.equalsIgnoreCase("UTF-16")) {
+//        	str.delete(0, 1);
+//        } 
+        textArea.setText(str.toString());
         str = null;
       } catch (Exception e) {
         debug(stackTraceToString(e));
@@ -79,20 +88,26 @@ private static final String nomClasse = "Ja";
     /**
      * chargement d'un text JTextArea à partir d'un fichier
      */
-    public static void loadTextArea(JTextArea textArea, String fichier, JaFrame jaf) {
+    public static void loadTextArea(JTextArea textArea, String fichier, JaFrame jaf, String encoding) {
         String methode = "loadTextArea";
         textArea.setText("");
         try {
-            BufferedReader in = new BufferedReader(new FileReader( fichier ));
-//            BufferedReader in = new BufferedReader(new InputStreamReader(
-//            		new URL(fichier.indexOf(":")==-1 ? "file:" + fichier : fichier).openStream()
-//            		, System.getProperty("file.encoding")));
+            BufferedReader in = new BufferedReader(
+            		new InputStreamReader(new FileInputStream(fichier), encoding));
             StringBuffer str = new StringBuffer();
             String ligne;
             while ( (ligne = in.readLine()) != null ) {
                 str.append(ligne + "\n");
             } // endwhile
             in.close();
+
+//            if ( encoding.equalsIgnoreCase("UTF-8")) {
+//            	str.delete(0, 1);
+//            } 
+//            if ( encoding.equalsIgnoreCase("UTF-16")) {
+//            	str.delete(0, 0);
+//            }
+            
             textArea.setText(str.toString());
             str = null;
         } catch (Exception e) {
@@ -104,7 +119,7 @@ private static final String nomClasse = "Ja";
     /**
      * enregistrement d'un text JTextArea dans un fichier
      */
-    public static void saveTextArea(JTextArea textArea, String fichier, JaFrame jaf) {
+    public static void saveTextArea(JTextArea textArea, String fichier, JaFrame jaf, String encoding) {
         String methode = "saveTextArea";
         // transformation des simples lf ou cr en crlf
         String text = textArea.getText();
@@ -122,9 +137,14 @@ private static final String nomClasse = "Ja";
             } // end switch
         } // end for
         try {
-            PrintWriter out = new PrintWriter(new FileOutputStream( fichier ));
-            out.print(buf.toString());
-            out.close();
+        	FileOutputStream fos = new FileOutputStream(fichier);
+        	Writer out = new OutputStreamWriter(fos, encoding);
+//        	if ( encoding.equalsIgnoreCase("UTF-8")) {
+//        		out.write('\ufeff');
+//        	}
+        	out.write(buf.toString());
+        	out.close();
+        	
             text = null;
             buf = null;
         } catch (Exception e) {
@@ -591,6 +611,105 @@ private static final String nomClasse = "Ja";
     		buffer.append(Integer.toHexString(intValue) + " ");
     	}
     	return buffer.toString();
+    }
+    
+    /*
+     * http://code.google.com/p/juniversalchardet/
+     */
+    public static String getEncoding(String filePath) {
+    	String encoding = System.getProperty("file.encoding");  
+
+    	BufferedReader bufferedReader = null;
+
+    	try {
+        	byte[] buf = new byte[4096];
+            java.io.FileInputStream fis = new java.io.FileInputStream(filePath);
+
+            // (1)
+            UniversalDetector detector = new UniversalDetector(null);
+
+            // (2)
+            int nread;
+            while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+              detector.handleData(buf, 0, nread);
+            }
+            // (3)
+            detector.dataEnd();
+
+            // (4)
+            encoding = detector.getDetectedCharset();
+            if (encoding != null) {
+              //System.out.println("Detected encoding = " + encoding);
+            } else {
+              //System.out.println("No encoding detected.");
+              encoding = System.getProperty("file.encoding");
+            }
+
+            // (5)
+            detector.reset();
+    	}
+    	catch (IOException ex) {
+    	}
+    	finally {
+    		if (bufferedReader != null) {
+    			try {
+    				bufferedReader.close();
+    			}
+    			catch (IOException ex) {
+    			}
+    		}
+    	}
+    	return encoding;
+    }
+    
+    /*
+     * http://code.google.com/p/juniversalchardet/
+     */
+    public static String getEncoding(URL url) {
+    	String encoding = System.getProperty("file.encoding");
+  
+
+    	BufferedReader bufferedReader = null;
+
+    	try {
+    		BufferedInputStream imp = new BufferedInputStream(url.openStream());
+            byte[] buf = new byte[4096] ;
+
+            // (1)
+            UniversalDetector detector = new UniversalDetector(null);
+
+            // (2)
+            int nread;
+            while ((nread = imp.read(buf,0,buf.length)) > 0 && !detector.isDone()) {
+              detector.handleData(buf, 0, nread);
+            }
+            // (3)
+            detector.dataEnd();
+
+            // (4)
+            encoding = detector.getDetectedCharset();
+            if (encoding != null) {
+              //System.out.println("Detected encoding = " + encoding);
+            } else {
+              //System.out.println("No encoding detected.");
+              encoding = System.getProperty("file.encoding");
+            }
+
+            // (5)
+            detector.reset();
+    	}
+    	catch (IOException ex) {
+    	}
+    	finally {
+    		if (bufferedReader != null) {
+    			try {
+    				bufferedReader.close();
+    			}
+    			catch (IOException ex) {
+    			}
+    		}
+    	}
+    	return encoding;
     }
 } // end Console
 

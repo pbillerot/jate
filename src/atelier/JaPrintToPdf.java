@@ -50,7 +50,9 @@ public class JaPrintToPdf {
             // ouverture du document
             document.open();
 
-            BufferedReader in = new BufferedReader(new FileReader(fichier));
+            String encoding = Ja.getEncoding(fichier);
+            BufferedReader in = new BufferedReader(
+            		new InputStreamReader(new FileInputStream(fichier), encoding));
             String str;
             while ((str = in.readLine()) != null ) {
                 document.add(new Paragraph(str + "\n", corps));

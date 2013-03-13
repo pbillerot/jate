@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="jate" default="jar">
 	<property name="cible" value="jate.jar" />	
-    <target name="jar" description="Generation du jar">
+    <target name="jar" description="Génération du jar">
         <delete file="${cible}"/>  
     	<jar destfile="${cible}">
 		    <fileset dir="META-INF"/>

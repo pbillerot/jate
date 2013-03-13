@@ -1,35 +1,39 @@
 A faire
 - jate.properties initial
+- F5 pour actualiser (recharger le fichier)
+- ajouter icÃ´ne actualiser (F5)
+- conversion PDF en UTF-8
 
 Fait
-o $edit sur nom absolu /doc/readme.txt à corriger - annulé car traité dans listPane
-o gérer le nom du répertoire par défaut en argument du lanceur
+o F11 pour exÃ©cuter la ligne (au lieu de F5)
+o $edit sur nom absolu /doc/readme.txt Ã  corriger - annulÃ© car traitÃ© dans listPane
+o gÃ©rer le nom du rÃ©pertoire par dÃ©faut en argument du lanceur
 o pouvoir enregistrer en tant que sudo -> gksudo tout simplement
 o afficher les images
 
-x voir problème du curseur dans l'éditeur (saut de ligne visible seulement au chargement suivant)
-  problème si utilisation touche gauche droite - réglé par line.separator=\n
+x voir problÃ¨me du curseur dans l'Ã©diteur (saut de ligne visible seulement au chargement suivant)
+  problÃ¨me si utilisation touche gauche droite - rÃ©glÃ© par line.separator=\n
 x traiter les macros dans Edit
-x intégrer aussi Desktop pour browser une URL
-x dater le démarrage et fin du shell
-x F5 possible dans l'éditeur
-o changer le répertoire temporaire en [user.dir].tmp par exemple -annulé
-x revoir le shell pour éviter la création de fichier temporaire
+x intÃ©grer aussi Desktop pour browser une URL
+x dater le dÃ©marrage et fin du shell
+x F5 possible dans l'Ã©diteur
+o changer le rÃ©pertoire temporaire en [user.dir].tmp par exemple -annulÃ©
+x revoir le shell pour Ã©viter la crÃ©ation de fichier temporaire
 x F5
 x barre des boutons
-o appel du shell en fonction de l'os - annulé
+o appel du shell en fonction de l'os - annulÃ©
 x lire les fichier en UTF-8
-x font défini dans Ja.java getFont getFontBouton
+x font dÃ©fini dans Ja.java getFont getFontBouton
 x revoir la gestion des extensions
 x revoir la notion de shell confusion avec dos
 x menu contextuel
-x gérer les actions
-x enlever possibilité "nouvelle ligne" "ouvrir un fichier liste" etc..
+x gÃ©rer les actions
+x enlever possibilitÃ© "nouvelle ligne" "ouvrir un fichier liste" etc..
 x traitement du flux shell
 x ouverture du pdf
-x ouvrir dans une nouvelle fenêtre ne marche pas
+x ouvrir dans une nouvelle fenÃªtre ne marche pas
 
-Bac à sable
+Bac Ã  sable
 -------------------------------------------------------------------------------------------
 ls -l
 http://www.google.fr/

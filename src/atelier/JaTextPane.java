@@ -19,6 +19,7 @@ private JaFrame         jaf = null;
 private JaProperties    jac;
 private boolean bModif = false;
 private String  fichier = "";
+private String encoding = null;
 static final JTextComponent.KeyBinding[] defaultBindings = {
      new JTextComponent.KeyBinding(
        KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK),
@@ -75,7 +76,9 @@ private JButton     buttonFin;
 private JTextArea   textArea;
 private JScrollPane scrollPane;
 private JViewport   viewPort;
-CaretListenerLabel  caretListenerLabel;
+private CaretListenerLabel  caretListenerLabel;
+private JLabel      labelEncoding;
+
 // BARRE RECHERCHE
 private JCheckBox   checkCasse;
 private JButton     buttonSearch;
@@ -88,6 +91,7 @@ private JTextField  textReplace;
         super(new BorderLayout());
         this.jaf = pjaf;
         this.jac = jaf.getJaProperties();
+        this.encoding = System.getProperty("file.encoding");
         initComponents();
         buttonEnabled();
         textArea.requestFocus();
@@ -99,10 +103,17 @@ private JTextField  textReplace;
             this.fichier = fichier;
             textArea.setText("");
             if (fichier.startsWith("/")) {
-            	Ja.loadTextArea(this.textArea, Ja.class.getResource(fichier), "UTF-8");
+            	this.encoding = Ja.getEncoding(Ja.class.getResource(fichier));
+            	Ja.loadTextArea(this.textArea, Ja.class.getResource(fichier), this.encoding);
             	this.textArea.setEditable(false);
-            } else if (!fichier.equals("")) { Ja.loadTextArea(this.textArea, fichier, jaf);
-            }            
+            } else {
+            	if (!fichier.equals("")) {
+                	this.encoding = Ja.getEncoding(fichier);
+            		Ja.loadTextArea(this.textArea, fichier, jaf, this.encoding);
+            	}
+            }
+            labelEncoding.setText(" - " + this.encoding);
+            
             undo.discardAllEdits();
             buttonEnabled();
             textArea.setCaretPosition(0); // positionnement au début du texte
@@ -128,7 +139,7 @@ private JTextField  textReplace;
 
     public void saveAs(String fichier) {
         this.fichier = fichier;
-        Ja.saveTextArea(textArea, fichier, jaf);
+        Ja.saveTextArea(textArea, fichier, jaf, this.encoding);
         undo.discardAllEdits();
         buttonEnabled();
         setTitre();

@@ -6,14 +6,12 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * @author  : Philippe.BILLEROT@laposte.net
- * @version : 1.0 du 23 juillet 2000
- * @version : 1.90 du 10 novembre 2005
+ * @author  : Philippe.BILLEROT@gmail.com
  */
 public class Jate extends JFrame implements ActionListener, JaPaneListener, JaFrame {
 	private final static String nomClasse = "Jate";
 	private final static String nomProperties = "jate.properties";
-	private final static String VERSION = "Jate 13.2.11";
+	private final static String VERSION = "Jate 13.3.13";
 private String  fichier = "";
 private final static String labelApropos = "Jate - Atelier de Maintenance"
 	+ "\n" + Jate.VERSION + " (c) philippe.billerot@gmail.com";

@@ -99,7 +99,7 @@ static final JTextComponent.KeyBinding[] defaultBindings = {
 
     public void saveAs(String fichier) {
         this.fichier = fichier;
-        Ja.saveTextArea(textArea, fichier, jaf);
+        Ja.saveTextArea(textArea, fichier, jaf, System.getProperty("file.encoding"));
     }
 
     /**
@@ -129,7 +129,7 @@ static final JTextComponent.KeyBinding[] defaultBindings = {
 
         menuPopup.add(new JSeparator() );
 
-        menuExecuter = new JMenuItem("exécuter (F5)");
+        menuExecuter = new JMenuItem("exécuter (F11)");
         menuExecuter.addActionListener(this);
         menuPopup.add(menuExecuter);
 
@@ -878,7 +878,7 @@ static final JTextComponent.KeyBinding[] defaultBindings = {
             // effacement du texte
             buttonDel.doClick();
         } // endif
-        if ( e.getKeyCode() == KeyEvent.VK_F5 ) {
+        if ( e.getKeyCode() == KeyEvent.VK_F11 ) {
             // exécution de la ligne de commande courante
             menuExecuter.doClick();
         } // endif
