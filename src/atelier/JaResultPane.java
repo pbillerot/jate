@@ -9,6 +9,7 @@ import javax.swing.text.*;
 
 
 import java.util.*;
+import java.util.List;
 import java.sql.*;
 
 /**
@@ -381,7 +382,10 @@ static final JTextComponent.KeyBinding[] defaultBindings = {
      */
     private void interpreteShellProcessBuilder() {
     	try {
-    		ProcessBuilder pb = new ProcessBuilder(jac.getParam("Jate", "shell") );
+    		List command = new ArrayList();
+    		command.add(jac.getParam("Jate", "shell"));
+
+    		ProcessBuilder pb = new ProcessBuilder(command);
     		Process process = pb.start();
             BufferedWriter outCommand = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             outCommand.write(ligneCommande);

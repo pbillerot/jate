@@ -1,6 +1,6 @@
     ----------------------------------------------
                Atelier de Maintenance
-    Jate 13.3.13 - (c) philippe.billerot@gmail.com
+    Jate 13.8.1 - (c) philippe.billerot@gmail.com
     ----------------------------------------------
 
     1 / PRESENTATION

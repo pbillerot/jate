@@ -696,7 +696,7 @@ private JTextField  textReplace;
                 int dot = e.getDot();
                 int lig = textArea.getLineOfOffset(dot);
                 int col = dot - textArea.getLineStartOffset(lig);
-                setText("lig:col[" + (lig + 1) + ":" + col + "] (" + dot + " car)");
+                setText("lig:col[" + (lig + 1) + ":" + (col + 1) + "] (" + dot + " car)");
             } catch (BadLocationException ble) {
                 setText("lig:col[erreur]");
             } // end try

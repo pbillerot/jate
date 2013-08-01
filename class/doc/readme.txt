@@ -1,4 +1,4 @@
-﻿    ----------------------------------------------
+    ----------------------------------------------
                Atelier de Maintenance
     Jate 13.3.13 - (c) philippe.billerot@gmail.com
     ----------------------------------------------
@@ -189,7 +189,7 @@
     La fenétre inférieure de l'atelier affiche le résultat des commande DOS ou SQL.
 
     Elle permet aussi la saisie de commandes (dos ou sql) directement dedans.
-    La validation se fera alors par la touche F5 sur la ligne de commande.
+    La validation se fera alors par la touche F11 sur la ligne de commande.
 
 6 / MACROS DANS LES LIGNES DE COMMANDES
     -----------------------------------

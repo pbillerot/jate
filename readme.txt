@@ -1,3 +1,1 @@
-rem Bienvenue sur Jate !
- uu
-j
+echo Bienvenue sur Jate !

@@ -307,7 +307,7 @@ private JButton     buttonEditNew;
     public void mousePressed(MouseEvent e) {
     }
     public void mouseReleased(MouseEvent e) {
-        if ( e.getClickCount() > 0 ) {
+        if ( e.getClickCount() > 1 ) {
             this.fichierEdit(liste.getSelectedValue().toString());
         } // endif
     }
@@ -339,6 +339,7 @@ private JButton     buttonEditNew;
         } // end for
     }
     protected void fireJaPaneEventEdit(String mess) {
+    	//this.jaf.log("fireJaPaneEventEdit " + mess);
         JaPaneEvent e = new JaPaneEvent(this, mess);
         for (int i=0, n = listeners.size(); i < n; i++ ) {
             JaPaneListener listener = (JaPaneListener)listeners.elementAt(i);
@@ -346,6 +347,7 @@ private JButton     buttonEditNew;
         } // end for
     }
     protected void fireJaPaneEventNewEdit(String mess) {
+    	//this.jaf.log("fireJaPaneEventNewEdit " + mess);
         JaPaneEvent e = new JaPaneEvent(this, mess);
         for (int i=0, n = listeners.size(); i < n; i++ ) {
             JaPaneListener listener = (JaPaneListener)listeners.elementAt(i);
@@ -366,6 +368,7 @@ private JButton     buttonEditNew;
     } // end setTitre
 
     private void fichierEdit(String fic) {
+    	//this.jaf.log("fichierEdit " + fic);
         // ajout du préfixe répertoire
         String path;
         if ( fic.charAt(1) != ':' && fic.charAt(0) != '/' ) {
@@ -408,6 +411,7 @@ private JButton     buttonEditNew;
         } // endif
     } // endif
     private void fichierNewEdit(String fic) {
+    	//this.jaf.log("fichierNewEdit " + fic);
         // ajout du préfixe répertoire
         String path;
         if ( fic.charAt(1) != ':' && fic.charAt(0) != '/' ) {
@@ -441,7 +445,7 @@ private JButton     buttonEditNew;
                         fireJaPaneEventNewEdit(liste.getSelectedValue().toString());
                 	} // endif
                 } else {
-                	// 
+                	fireJaPaneEventNewEdit(liste.getSelectedValue().toString());
                     break;
                 } // endif
             } // end for

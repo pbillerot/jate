@@ -5,6 +5,7 @@ A faire
 - conversion PDF en UTF-8
 
 Fait
+o Double clic pour éditer le fichier
 o F11 pour exécuter la ligne (au lieu de F5)
 o $edit sur nom absolu /doc/readme.txt à corriger - annulé car traité dans listPane
 o gérer le nom du répertoire par défaut en argument du lanceur

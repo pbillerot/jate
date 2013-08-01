@@ -11,7 +11,7 @@ import java.util.*;
 public class Jate extends JFrame implements ActionListener, JaPaneListener, JaFrame {
 	private final static String nomClasse = "Jate";
 	private final static String nomProperties = "jate.properties";
-	private final static String VERSION = "Jate 13.3.13";
+	private final static String VERSION = "Jate 13.8.1";
 private String  fichier = "";
 private final static String labelApropos = "Jate - Atelier de Maintenance"
 	+ "\n" + Jate.VERSION + " (c) philippe.billerot@gmail.com";
